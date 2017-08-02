@@ -13,7 +13,6 @@
 		FA0214D61F31FA69006FC509 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0214D41F31FA69006FC509 /* Main.storyboard */; };
 		FA0214D81F31FA6A006FC509 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA0214D71F31FA6A006FC509 /* Assets.xcassets */; };
 		FA0214DB1F31FA6A006FC509 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0214D91F31FA6A006FC509 /* LaunchScreen.storyboard */; };
-		FA3C73EC1F31FC7F007361FF /* applicationMetadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA3C73EB1F31FC7F007361FF /* applicationMetadata.xml */; };
 		FA3C73FB1F31FECB007361FF /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C73F71F31FECB007361FF /* AppConstant.swift */; };
 		FA3C73FC1F31FECB007361FF /* E_MAIL.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C73F81F31FECB007361FF /* E_MAIL.swift */; };
 		FA3C73FD1F31FECB007361FF /* PERSON_HEADER.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C73F91F31FECB007361FF /* PERSON_HEADER.swift */; };
@@ -21,8 +20,9 @@
 		FA3C74001F31FF03007361FF /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C73FF1F31FF03007361FF /* Utility.swift */; };
 		FA3C74021F31FF0C007361FF /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C74011F31FF0C007361FF /* AddPersonViewController.swift */; };
 		FA3C74041F31FF17007361FF /* GetPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C74031F31FF17007361FF /* GetPersonViewController.swift */; };
-		FA3C74061F31FF2B007361FF /* NetworkCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C74051F31FF2B007361FF /* NetworkCommunicationManager.swift */; };
-		FA3C74091F32051F007361FF /* metadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA3C74081F32051F007361FF /* metadata.xml */; };
+		FA7C3CB21F320E4300B201E9 /* NetworkCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */; };
+		FA7C3CB81F320EE300B201E9 /* metadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA7C3CB71F320EE300B201E9 /* metadata.xml */; };
+		FA7C3CBA1F320F1800B201E9 /* applicationMetadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,6 @@
 		FA0214DA1F31FA6A006FC509 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA0214DC1F31FA6A006FC509 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA3C73E81F31FC25007361FF /* SAP-Sample-ios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAP-Sample-ios-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA3C73EB1F31FC7F007361FF /* applicationMetadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = applicationMetadata.xml; path = ../../../../Desktop/SAP_Sample/applicationMetadata.xml; sourceTree = "<group>"; };
 		FA3C73F71F31FECB007361FF /* AppConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		FA3C73F81F31FECB007361FF /* E_MAIL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = E_MAIL.swift; sourceTree = "<group>"; };
 		FA3C73F91F31FECB007361FF /* PERSON_HEADER.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PERSON_HEADER.swift; sourceTree = "<group>"; };
@@ -45,8 +44,9 @@
 		FA3C73FF1F31FF03007361FF /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		FA3C74011F31FF0C007361FF /* AddPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 		FA3C74031F31FF17007361FF /* GetPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPersonViewController.swift; sourceTree = "<group>"; };
-		FA3C74051F31FF2B007361FF /* NetworkCommunicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkCommunicationManager.swift; path = ../../../../../Desktop/SAP_Sample/NetworkCommunicationManager.swift; sourceTree = "<group>"; };
-		FA3C74081F32051F007361FF /* metadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = metadata.xml; path = ../../../../../Desktop/SAP_Sample/metadata.xml; sourceTree = "<group>"; };
+		FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCommunicationManager.swift; sourceTree = "<group>"; };
+		FA7C3CB71F320EE300B201E9 /* metadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = metadata.xml; sourceTree = "<group>"; };
+		FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = applicationMetadata.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 		FA0214C41F31FA69006FC509 = {
 			isa = PBXGroup;
 			children = (
-				FA3C73EB1F31FC7F007361FF /* applicationMetadata.xml */,
+				FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */,
 				FA3C73F61F31FECB007361FF /* BE'S */,
 				FA0214CF1F31FA69006FC509 /* SAP-Sample-ios */,
 				FA0214CE1F31FA69006FC509 /* Products */,
@@ -105,7 +105,6 @@
 				FA3C73FF1F31FF03007361FF /* Utility.swift */,
 				FA0214D01F31FA69006FC509 /* AppDelegate.swift */,
 				FA3C74071F31FF4C007361FF /* ViewControllers */,
-				FA3C74051F31FF2B007361FF /* NetworkCommunicationManager.swift */,
 				FA0214D41F31FA69006FC509 /* Main.storyboard */,
 				FA0214D71F31FA6A006FC509 /* Assets.xcassets */,
 				FA0214D91F31FA6A006FC509 /* LaunchScreen.storyboard */,
@@ -117,7 +116,7 @@
 		FA3C73F61F31FECB007361FF /* BE'S */ = {
 			isa = PBXGroup;
 			children = (
-				FA3C74081F32051F007361FF /* metadata.xml */,
+				FA7C3CB71F320EE300B201E9 /* metadata.xml */,
 				FA3C73F71F31FECB007361FF /* AppConstant.swift */,
 				FA3C73F81F31FECB007361FF /* E_MAIL.swift */,
 				FA3C73F91F31FECB007361FF /* PERSON_HEADER.swift */,
@@ -129,6 +128,7 @@
 		FA3C74071F31FF4C007361FF /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */,
 				FA0214D21F31FA69006FC509 /* ViewController.swift */,
 				FA3C74031F31FF17007361FF /* GetPersonViewController.swift */,
 				FA3C74011F31FF0C007361FF /* AddPersonViewController.swift */,
@@ -200,11 +200,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA3C74091F32051F007361FF /* metadata.xml in Resources */,
+				FA7C3CB81F320EE300B201E9 /* metadata.xml in Resources */,
 				FA0214DB1F31FA6A006FC509 /* LaunchScreen.storyboard in Resources */,
 				FA0214D81F31FA6A006FC509 /* Assets.xcassets in Resources */,
+				FA7C3CBA1F320F1800B201E9 /* applicationMetadata.xml in Resources */,
 				FA0214D61F31FA69006FC509 /* Main.storyboard in Resources */,
-				FA3C73EC1F31FC7F007361FF /* applicationMetadata.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +272,7 @@
 				FA3C73FE1F31FECB007361FF /* UnviredSAPSampleUtils.swift in Sources */,
 				FA0214D11F31FA69006FC509 /* AppDelegate.swift in Sources */,
 				FA3C74021F31FF0C007361FF /* AddPersonViewController.swift in Sources */,
-				FA3C74061F31FF2B007361FF /* NetworkCommunicationManager.swift in Sources */,
+				FA7C3CB21F320E4300B201E9 /* NetworkCommunicationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
