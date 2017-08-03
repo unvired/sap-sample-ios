@@ -15,10 +15,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
     
+    fileprivate var personHeaders : [PERSON_HEADER] = []
+    fileprivate var tableViewSections: [String] = []
+    fileprivate var tableViewDataSource : [String: [PERSON_HEADER]] = [:]
+    fileprivate var isFiltered: Bool = false
+    fileprivate var searchResultsDataSource = [AnyObject]()
+    var searchResultsTableViewSection: [String] = []
+    var searchResultsTableViewDataSource : [String: [PERSON_HEADER]] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupUI()
+        personHeaders = Utility.getAllPersonHeaders()
+        self.sortPersonHeader(personHeaders: self.personHeaders)
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,12 +63,53 @@ class ViewController: UIViewController {
         settingsViewController.delegate = self
         let navController: UINavigationController = UINavigationController(rootViewController: settingsViewController)
         navController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        navController.navigationBar.barTintColor = UIColor.blue
+        navController.navigationBar.barStyle = UIBarStyle.black
+        navController.navigationBar.tintColor = UIColor.white
         self.present(navController, animated: true, completion: nil)
     }
     
     func showGetPersonScreen() {
         let getPersonViewController: GetPersonViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "getPersonViewController") as! GetPersonViewController
+        getPersonViewController.delegate = self
         self.navigationController?.pushViewController(getPersonViewController, animated: true)
+    }
+    
+    func sortPersonHeader(personHeaders: [PERSON_HEADER]) {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".characters.map({ String($0) })
+        var sectionArray : [String] = []
+        var dataSorce: [String: [PERSON_HEADER]] = [:]
+        
+        for letter in alphabet {
+            let matches = personHeaders.filter({ ($0.FIRST_NAME?.uppercased().hasPrefix(letter))! })
+            if !matches.isEmpty {
+                dataSorce[letter] = []
+                for word in matches {
+                    if !sectionArray.contains(letter) {
+                        sectionArray.append(letter)
+                    }
+                    
+                    dataSorce[letter]?.append(word)
+                }
+            }
+        }
+        
+        sectionArray = sectionArray.sorted(by: <)
+        
+        if isFiltered {
+            searchResultsTableViewSection.removeAll()
+            searchResultsTableViewDataSource.removeAll()
+            
+            searchResultsTableViewSection =  sectionArray
+            searchResultsTableViewDataSource = dataSorce
+        } else {
+            tableViewSections.removeAll()
+            tableViewDataSource.removeAll()
+            
+            tableViewSections = sectionArray
+            tableViewDataSource = dataSorce
+        }
+        
     }
     
     // MARK:- Actions
@@ -103,3 +154,182 @@ extension ViewController : SettingsDelegate {
     }
 }
 
+// MARK:- TableView DataSource and Delegate methods
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if isFiltered {
+            return searchResultsTableViewSection.count
+        }
+        
+        return tableViewSections.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let sectionHeaderView = UIView()
+        sectionHeaderView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 35)
+        
+        let sectionHeaderLabel = UILabel()
+        sectionHeaderLabel.frame = CGRect(x: self.view.frame.origin.x+20, y: 5, width: 100, height: 30)
+        sectionHeaderLabel.textAlignment = .left
+        sectionHeaderLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+        
+        if isFiltered {
+            sectionHeaderLabel.text =  searchResultsTableViewSection[section]
+        }
+        else {
+            sectionHeaderLabel.text =  tableViewSections[section]
+        }
+        
+        sectionHeaderView.backgroundColor = UIColor.groupTableViewBackground
+        sectionHeaderView.addSubview(sectionHeaderLabel)
+        return sectionHeaderView
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var numberOfRows: Int = Int()
+        
+        if isFiltered {
+            
+            let sectionType = searchResultsTableViewSection[section]
+            let dataArray = searchResultsTableViewDataSource[sectionType]
+            
+            numberOfRows = dataArray!.count
+            
+            if let _ = dataArray {
+                numberOfRows = dataArray!.count
+            }
+            
+        } else {
+            
+            let sectionType = tableViewSections[section]
+            let dataArray = tableViewDataSource[sectionType]
+            
+            numberOfRows = dataArray!.count
+            
+            if let _ = dataArray {
+                numberOfRows = dataArray!.count
+            }
+        }
+        
+        return numberOfRows
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = UITableViewCell(style:UITableViewCellStyle.subtitle, reuseIdentifier:"cell")
+        var personHeader : PERSON_HEADER = PERSON_HEADER()
+        
+        if isFiltered {
+            let sectionType = searchResultsTableViewSection[indexPath.section]
+            let dataArray = searchResultsTableViewDataSource[sectionType]
+            personHeader = dataArray![indexPath.row]
+        }
+        else {
+            let sectionType = tableViewSections[indexPath.section]
+            let dataArray = tableViewDataSource[sectionType]
+            personHeader = dataArray![indexPath.row]
+        }
+        
+        var name = ""
+        
+        if let fName = personHeader.FIRST_NAME {
+            name += fName
+            if let lName = personHeader.LAST_NAME {
+                name += " " + lName
+            }
+        }
+        
+        cell.textLabel?.text = name
+        
+        if let perNumber = personHeader.PERSNUMBER {
+            cell.detailTextLabel?.text = String(describing: perNumber)
+        }
+        
+        cell.textLabel?.textColor = UIColor.darkText
+        cell.detailTextLabel?.textColor = UIColor.gray
+        
+        cell.accessoryType = UITableViewCellAccessoryType.none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let personDetailViewController: PersonDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonDetailViewController") as! PersonDetailViewController
+        
+        var personHeader: PERSON_HEADER = PERSON_HEADER()
+        if isFiltered {
+            let sectionType = searchResultsTableViewSection[indexPath.section]
+            let dataArray = searchResultsTableViewDataSource[sectionType]
+            personHeader = dataArray![indexPath.row]
+            
+        } else {
+            let sectionType = tableViewSections[indexPath.section]
+            let dataArray = tableViewDataSource[sectionType]
+            personHeader = dataArray![indexPath.row]
+        }
+        
+        personDetailViewController.incomingPersonHeader = personHeader
+        self.navigationController?.pushViewController(personDetailViewController, animated: true)
+    }
+    
+}
+
+// MARK:- Search Bar Delegate methods
+extension ViewController : UISearchBarDelegate, UISearchDisplayDelegate  {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isFiltered = false
+        self.searchBar.text = ""
+        self.view.endEditing(true)
+        tableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if((searchBar.text?.characters.count)! > 0) {
+            isFiltered = true
+        }
+        else {
+            isFiltered = false
+        }
+        
+        searchResultsDataSource.removeAll()
+        var searchText = ""
+        
+        if (self.searchBar.text?.characters.count)! > 0 {
+            searchText = self.searchBar.text!.lowercased()
+        }
+        else {
+            Utility.runInMainThread({
+                self.tableView.reloadData()
+                self.view.endEditing(true)
+            })
+            return
+        }
+        
+        searchResultsDataSource = personHeaders.filter {($0.FIRST_NAME?.lowercased() ?? "").contains(searchText) || ($0.LAST_NAME?.lowercased() ?? "").contains(searchText)}
+        
+        if let filteredPersonHeaders = searchResultsDataSource as? [PERSON_HEADER] {
+            sortPersonHeader(personHeaders: filteredPersonHeaders)
+            self.tableView.reloadData()
+        }
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+}
+
+extension ViewController: GetPersonDelegate {
+    
+    func didGetPerson() {
+        personHeaders = Utility.getAllPersonHeaders()
+        sortPersonHeader(personHeaders: self.personHeaders)
+        tableView.reloadData()
+    }
+}

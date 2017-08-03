@@ -23,6 +23,7 @@
 		FA7C3CB21F320E4300B201E9 /* NetworkCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */; };
 		FA7C3CB81F320EE300B201E9 /* metadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA7C3CB71F320EE300B201E9 /* metadata.xml */; };
 		FA7C3CBA1F320F1800B201E9 /* applicationMetadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */; };
+		FAEF04C41F3328450008E71E /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEF04C31F3328450008E71E /* PersonDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCommunicationManager.swift; sourceTree = "<group>"; };
 		FA7C3CB71F320EE300B201E9 /* metadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = metadata.xml; sourceTree = "<group>"; };
 		FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = applicationMetadata.xml; sourceTree = "<group>"; };
+		FAEF04C31F3328450008E71E /* PersonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				FA0214D21F31FA69006FC509 /* ViewController.swift */,
 				FA3C74031F31FF17007361FF /* GetPersonViewController.swift */,
 				FA3C74011F31FF0C007361FF /* AddPersonViewController.swift */,
+				FAEF04C31F3328450008E71E /* PersonDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				FA3C73FC1F31FECB007361FF /* E_MAIL.swift in Sources */,
 				FA3C74041F31FF17007361FF /* GetPersonViewController.swift in Sources */,
 				FA3C73FE1F31FECB007361FF /* UnviredSAPSampleUtils.swift in Sources */,
+				FAEF04C41F3328450008E71E /* PersonDetailViewController.swift in Sources */,
 				FA0214D11F31FA69006FC509 /* AppDelegate.swift in Sources */,
 				FA3C74021F31FF0C007361FF /* AddPersonViewController.swift in Sources */,
 				FA7C3CB21F320E4300B201E9 /* NetworkCommunicationManager.swift in Sources */,

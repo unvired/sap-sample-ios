@@ -77,4 +77,81 @@ struct Utility {
             errorAlertView.show()
         }
     }
+    
+     
+    static func insertPersonHeaderToDB(person: PERSON_HEADER) {
+        let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!
+        do {
+            
+            try dataManager.insert(person)
+        }
+        catch let error as NSError {
+            logErrorMessage(error)
+        }
+        
+    }
+    
+    static func getAllPersonHeaders() -> [PERSON_HEADER] {
+        let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!
+        var personHeaders : [PERSON_HEADER] = []
+        
+        do {
+            personHeaders = try dataManager.get(PERSON_HEADER.TABLE_NAME, whereClause: "", orderByFields: [PERSON_HEADER.FIRST_NAME]) as! [PERSON_HEADER]
+            
+            if personHeaders.count > 0 {
+                return personHeaders
+            }
+            
+        } catch let error as NSError {
+            logErrorMessage(error)
+        }
+        
+        return personHeaders
+    }
+    
+    static func getEmailAddress(person: PERSON_HEADER) -> [E_MAIL] {
+        let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!
+        var emails : [E_MAIL] = []
+        
+        let whereClause = "\(E_MAIL.PERSNUMBER) = '\(person.PERSNUMBER!)'"
+        
+        
+        do {
+            emails = try dataManager.get(E_MAIL.TABLE_NAME, whereClause: whereClause, orderByFields: [E_MAIL.E_ADDR]) as! [E_MAIL]
+            
+            if emails.count > 0 {
+                return emails
+            }
+            
+        } catch let error as NSError {
+            logErrorMessage(error)
+        }
+        
+        return emails
+    }
+    
+    
+    static func deleteHeadersInDatabase(_ dataStructures: [IDataStructure]) -> Bool {
+        let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!
+        for dataStructure:IDataStructure in dataStructures {
+            do {
+                try dataManager.delete(dataStructure)
+                return true
+            }
+            catch let error as NSError {
+                Utility.logErrorMessage(error)
+                return false
+            }
+        }
+        
+        return false
+    }
+    
+    static func logErrorMessage(_ error: NSError?) {
+        if error != nil {
+            Logger.logger(with: LEVEL.ERROR, className: String(describing: Utility()), method: #function , message: error!.localizedDescription)
+        }
+    }
+    
+    
 }
