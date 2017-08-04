@@ -147,6 +147,20 @@ struct Utility {
         return false
     }
     
+    static func insertOrReplaceHeadersInDatabase(_ dataStructures: [IDataStructure]) -> Bool {
+        let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!
+        
+        for dataStructure:IDataStructure in dataStructures {
+            do {
+                try dataManager.replace(dataStructure)
+            }
+            catch let error as NSError {
+                Utility.displayErrorInformation(error)
+            }
+        }
+        return true
+    }
+    
     static func logErrorMessage(_ error: NSError?) {
         if error != nil {
             Logger.logger(with: LEVEL.ERROR, className: String(describing: Utility()), method: #function , message: error!.localizedDescription)

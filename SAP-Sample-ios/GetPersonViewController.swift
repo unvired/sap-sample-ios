@@ -49,7 +49,7 @@ class GetPersonViewController: UIViewController {
         
         self.contentView.layer.cornerRadius = 5
         self.contentView.layer.borderWidth = 1.0
-        self.contentView.layer.borderColor = UIColor.lightGray.cgColor
+        self.contentView.layer.borderColor = UIColor.white.cgColor
         self.contentView.isHidden = true
         
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(GetPersonViewController.didTapOnView))

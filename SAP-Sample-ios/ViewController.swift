@@ -142,6 +142,7 @@ class ViewController: UIViewController {
     
     @IBAction func addButtonClicked(_ sender: Any) {
         let addPersonViewController: AddPersonViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addPersonViewController") as! AddPersonViewController
+        addPersonViewController.delegate = self
         self.navigationController?.pushViewController(addPersonViewController, animated: true)
     }
     
