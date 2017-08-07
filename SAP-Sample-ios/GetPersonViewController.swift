@@ -26,6 +26,7 @@ class GetPersonViewController: UIViewController {
     fileprivate var networkManger: NetworkCommunicationManager = NetworkCommunicationManager()
     var personHeader : PERSON_HEADER = PERSON_HEADER()
     var downloadedPersonHeader: PERSON_HEADER = PERSON_HEADER()
+    var emails : [E_MAIL] = []
     var didDownloadPersonHeader = false
     var delegate: GetPersonDelegate?
     
@@ -80,6 +81,8 @@ class GetPersonViewController: UIViewController {
             let alertController = UIAlertController(title: nil, message:
                 NSLocalizedString("Do you want to save results?", comment: "") , preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) { (action) -> Void in
+                Utility.insertOrReplaceHeadersInDatabase([self.downloadedPersonHeader])
+                Utility.insertOrReplaceHeadersInDatabase(self.emails)
                 self.delegate?.didGetPerson()
                 self.navigationController?.popViewController(animated: true)
             })
@@ -161,7 +164,9 @@ extension GetPersonViewController: NetworkConnectionDelegate {
         hideBusyIndicator()
         Utility.displayStringInAlertView("", desc: "Person Downloaded.")
         self.didDownloadPersonHeader = true
-        self.downloadedPersonHeader = self.getPersonHeader(responseHaeders)[0]
+        let resultData = self.getPersonHeader(responseHaeders)
+        self.downloadedPersonHeader = resultData.0[0]
+        self.emails = resultData.1
         self.contentView.isHidden = false
         
         var personName = ""
@@ -185,8 +190,9 @@ extension GetPersonViewController: NetworkConnectionDelegate {
         Utility.displayAlertWithOKButton("", message: errorMessage.localizedDescription, viewController: self)
     }
     
-    func getPersonHeader(_ dataBEs: Dictionary<NSObject, AnyObject>) -> [PERSON_HEADER] {
+    func getPersonHeader(_ dataBEs: Dictionary<NSObject, AnyObject>) -> ([PERSON_HEADER],[E_MAIL]) {
         var personHeader: [PERSON_HEADER] = []
+        var emails : [E_MAIL] = []
         var headers:Dictionary<NSObject, AnyObject>?
         
         for (key, values) in dataBEs {
@@ -196,10 +202,11 @@ extension GetPersonViewController: NetworkConnectionDelegate {
         }
         
         if let headers = headers {
-            for (header, _) in headers {
+            for (header, value) in headers {
+                emails = value as! [E_MAIL]
                 personHeader.append(header as! PERSON_HEADER)
             }
         }
-        return personHeader
+        return (personHeader, emails)
     }
 }

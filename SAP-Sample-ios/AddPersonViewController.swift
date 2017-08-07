@@ -242,12 +242,30 @@ extension AddPersonViewController: NetworkConnectionDelegate {
     func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<NSObject, AnyObject>) {
         hideBusyIndicator()
         Utility.displayStringInAlertView("", desc: infoMessage)
+        getPersonNumber(infoMessage: infoMessage)
         delegate?.didGetPerson()
+        self.navigationController?.popViewController(animated: true)
     }
     
     func didEncounterErrorForPA(_ paFunctionName: String, errorMessage: NSError) {
         hideBusyIndicator()
         Utility.displayAlertWithOKButton("", message: errorMessage.localizedDescription, viewController: self)
+    }
+    
+    func getPersonNumber(infoMessage : String) {
+        let tokens = infoMessage.components(separatedBy: "person number=")
+        if let number = Int(tokens[1].components(separatedBy: ")")[0]) {
+            personHeader.PERSNUMBER = number as NSNumber
+            print("Person Number : \(String(describing: personHeader.PERSNUMBER))")
+            
+            for mail in emailIds {
+                mail.PERSNUMBER = personHeader.PERSNUMBER
+            }
+            
+            // Save
+            Utility.insertOrReplaceHeadersInDatabase([personHeader])
+            Utility.insertOrReplaceHeadersInDatabase(emailIds)
+        }
     }
 }
 

@@ -283,11 +283,30 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController : UISearchBarDelegate, UISearchDisplayDelegate  {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
         isFiltered = false
         self.searchBar.text = ""
         self.view.endEditing(true)
         tableView.reloadData()
     }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsCancelButton = true
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        
+        if searchBar.text != nil && searchBar.text!.characters.count > 0 {
+            searchBar.showsCancelButton = false
+        }
+        else {
+            searchBar.showsCancelButton = false
+            searchBar.resignFirstResponder()
+        }
+        return true
+    }
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if((searchBar.text?.characters.count)! > 0) {
@@ -321,6 +340,7 @@ extension ViewController : UISearchBarDelegate, UISearchDisplayDelegate  {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
         searchBar.resignFirstResponder()
     }
     
