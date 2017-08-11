@@ -39,7 +39,7 @@ class NetworkCommunicationManager : NSObject {
                                                                                   dataStructure: header,
                                                                                   customData: "",
                                                                                   processAgentFunctionName: PAFunctionName,
-                                                                                  autosave: true)
+                                                                                  autosave: false)
             } catch let errorString as NSError {
                 error = errorString
                 self.makeErrorCallback(PAFunctionName, error: error!)
