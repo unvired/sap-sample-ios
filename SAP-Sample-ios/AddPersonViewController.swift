@@ -11,6 +11,7 @@ import Foundation
 class AddPersonViewController: UIViewController {
     
     // MARK:- Properties
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var genderTextField: UITextField!
@@ -33,6 +34,7 @@ class AddPersonViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         networkManager.delegate = self
         self.setupUI()
+        registerForKeyboardNotifications()
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,6 +42,7 @@ class AddPersonViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+
     func setupUI() {
         self.navigationItem.title = NSLocalizedString("Add/Create Person", comment: "")
         Utility.removeExtraLinesFromTableView(self.tableView)
@@ -188,10 +191,12 @@ extension AddPersonViewController : UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.activeTextFied = textField
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activeTextFied = nil
         textField.resignFirstResponder()
     }
     
@@ -269,3 +274,55 @@ extension AddPersonViewController: NetworkConnectionDelegate {
     }
 }
 
+
+// MARK:- Keyboard Management
+extension AddPersonViewController {
+    
+    func registerForKeyboardNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(AddPersonViewController.keyboardWillBeShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(AddPersonViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWillBeShown(_ notification: Notification) {
+        if (self.view.window == nil) {
+            return
+        }
+        
+        guard let _ = activeTextFied else {
+            return
+        }
+        
+        var userInfo: NSDictionary!
+        userInfo = (notification as NSNotification).userInfo as NSDictionary!
+        
+        let keyboardF:NSValue = (userInfo.object(forKey: UIKeyboardFrameEndUserInfoKey) as? NSValue)!
+        let keyboardFrame = keyboardF.cgRectValue
+        let kbHeight = keyboardFrame.height
+        
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbHeight, 0.0)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+        
+        // If active text field is hidden by keyboard, scroll it so it's visible
+        // Your app might not need or want this behavior.
+        var aRect: CGRect = self.view.frame;
+        aRect.size.height -= kbHeight;
+        if (!aRect.contains(activeTextFied!.frame.origin) ) {
+            scrollView.scrollRectToVisible((activeTextFied?.frame)!, animated: true)
+        }
+        
+    }
+    
+    func keyboardWillBeHidden(_ notification: Notification) {
+        if (self.view.window == nil) {
+            return
+        }
+        
+        let contentInsets: UIEdgeInsets = UIEdgeInsets.zero
+        
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+}
