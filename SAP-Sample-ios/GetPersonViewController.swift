@@ -103,7 +103,7 @@ class GetPersonViewController: UIViewController {
         let number = String(describing: personHeader.PERSNUMBER)
         
         if (number.characters.count == 0 || number == "nil") {
-            Utility.displayAlertWithOKButton("", message: "Plesae provide Person Number", viewController: self)
+            Utility.displayAlertWithOKButton("", message: "Please provide Person Number", viewController: self)
             return
         }
         
