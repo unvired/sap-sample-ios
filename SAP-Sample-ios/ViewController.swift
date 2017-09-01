@@ -76,25 +76,68 @@ class ViewController: UIViewController {
     }
     
     func sortPersonHeader(personHeaders: [PERSON_HEADER]) {
+        
+        /**
+         * Sort Persons in Alphabetical order.
+         */
+        
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".characters.map({ String($0) })
         var sectionArray : [String] = []
         var dataSorce: [String: [PERSON_HEADER]] = [:]
+        var sortedPersonHeaders: [PERSON_HEADER] = []
         
-        for letter in alphabet {
-            let matches = personHeaders.filter({ ($0.FIRST_NAME?.uppercased().hasPrefix(letter))! })
-            if !matches.isEmpty {
-                dataSorce[letter] = []
-                for word in matches {
-                    if !sectionArray.contains(letter) {
-                        sectionArray.append(letter)
-                    }
-                    
-                    dataSorce[letter]?.append(word)
-                }
+        sortedPersonHeaders = personHeaders.sorted { (a, b) -> Bool in
+            
+            var afirstCharacter: String
+            if let firstName = a.FIRST_NAME {
+                afirstCharacter = String(firstName.characters.prefix(1)).uppercased()
             }
+            else {
+                afirstCharacter = "#"
+            }
+            
+            var bfirstCharacter: String
+            if let firstName = b.FIRST_NAME {
+                bfirstCharacter = String(firstName.characters.prefix(1)).uppercased()
+            }
+            else {
+                bfirstCharacter = "#"
+            }
+            
+            if ( !alphabet.contains(afirstCharacter)) && ( !alphabet.contains(bfirstCharacter) ) {
+                return a.PERSNUMBER!.intValue < b.PERSNUMBER!.intValue
+            }
+            else if (!alphabet.contains(afirstCharacter)) {
+                return false
+                
+            }
+            else if (!alphabet.contains(bfirstCharacter)) {
+                return true
+            }
+            
+            return a.FIRST_NAME! < b.FIRST_NAME!
         }
         
-        sectionArray = sectionArray.sorted(by: <)
+        for person in sortedPersonHeaders {
+            
+            var firstCharacter: String
+            if let firstName = person.FIRST_NAME {
+                firstCharacter = String(firstName.characters.prefix(1)).uppercased()
+            }
+            else {
+                firstCharacter = "#"
+            }
+            
+            if !alphabet.contains(firstCharacter) {
+                firstCharacter = "#"
+            }
+            
+            if dataSorce[firstCharacter] == nil {
+                dataSorce[firstCharacter] = []
+                sectionArray.append(firstCharacter)
+            }
+            dataSorce[firstCharacter]?.append(person)
+        }
         
         if isFiltered {
             searchResultsTableViewSection.removeAll()
@@ -109,7 +152,6 @@ class ViewController: UIViewController {
             tableViewSections = sectionArray
             tableViewDataSource = dataSorce
         }
-        
     }
     
     // MARK:- Actions
