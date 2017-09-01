@@ -190,6 +190,17 @@ extension GetPersonViewController: NetworkConnectionDelegate {
         Utility.displayAlertWithOKButton("", message: errorMessage.localizedDescription, viewController: self)
     }
     
+    func didNotFindSystemCredentials(_ paFunctionName: String) {
+        alertController.dismiss(animated: true) {
+            UnviredFrameworkUtils.checkSystemCredentials(present: { (viewController) in
+                let navigationController = UINavigationController(rootViewController: viewController!)
+                self.present(navigationController, animated: true, completion: nil)
+            }) {
+                self.navigationController?.topViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     func getPersonHeader(_ dataBEs: Dictionary<NSObject, AnyObject>) -> ([PERSON_HEADER],[E_MAIL]) {
         var personHeader: [PERSON_HEADER] = []
         var emails : [E_MAIL] = []

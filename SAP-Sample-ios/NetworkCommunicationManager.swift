@@ -11,6 +11,7 @@ import Foundation
 protocol NetworkConnectionDelegate {
     func didGetResponseForPA(_ paFunctionName : String,infoMessage:String, responseHaeders: Dictionary<NSObject, AnyObject>)
     func didEncounterErrorForPA(_ paFunctionName: String, errorMessage: NSError)
+    func didNotFindSystemCredentials(_ paFunctionName: String)
 }
 
 class NetworkCommunicationManager : NSObject {
@@ -83,7 +84,11 @@ class NetworkCommunicationManager : NSObject {
                     }
                     
                 case RESPONSE_STATUS.CANCEL:
-                    print("User Cancelled the Network Call from Proceeding");
+                    // This may happens in two cases :
+                    // 1. User may cancel the network call.
+                    // 2. If there is no system credential.
+                    self.makeSystemCredentialNotFoundCallback(PAFunctionName)
+                    
                     
                 case RESPONSE_STATUS.FAILURE:
                     print("Call Failed. Need to Handle it")
@@ -109,6 +114,11 @@ class NetworkCommunicationManager : NSObject {
     func makeErrorCallback(_ paFunctionName: String, error: NSError) {
         Utility.runInMainThread { () -> Void in
             self.delegate?.didEncounterErrorForPA(paFunctionName, errorMessage: error)
+        }
+    }
+    func makeSystemCredentialNotFoundCallback(_ paFunctionName: String) {
+        Utility.runInMainThread { () -> Void in
+            self.delegate?.didNotFindSystemCredentials(paFunctionName)
         }
     }
     

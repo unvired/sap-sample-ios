@@ -257,6 +257,17 @@ extension AddPersonViewController: NetworkConnectionDelegate {
         Utility.displayAlertWithOKButton("", message: errorMessage.localizedDescription, viewController: self)
     }
     
+    func didNotFindSystemCredentials(_ paFunctionName: String) {
+        alertController.dismiss(animated: true) {
+            UnviredFrameworkUtils.checkSystemCredentials(present: { (viewController) in
+                let navigationController = UINavigationController(rootViewController: viewController!)
+                self.present(navigationController, animated: true, completion: nil)
+            }) {
+                self.navigationController?.topViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     func getPersonNumber(infoMessage : String) {
         let tokens = infoMessage.components(separatedBy: "person number=")
         if let number = Int(tokens[1].components(separatedBy: ")")[0]) {
