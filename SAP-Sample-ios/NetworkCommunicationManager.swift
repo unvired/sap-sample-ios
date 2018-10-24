@@ -9,7 +9,7 @@
 import Foundation
 
 protocol NetworkConnectionDelegate {
-    func didGetResponseForPA(_ paFunctionName : String,infoMessage:String, responseHaeders: Dictionary<NSObject, AnyObject>)
+    func didGetResponseForPA(_ paFunctionName : String,infoMessage:String, responseHaeders: Dictionary<String, AnyObject>)
     func didEncounterErrorForPA(_ paFunctionName: String, errorMessage: NSError)
     func didNotFindSystemCredentials(_ paFunctionName: String)
 }
@@ -19,7 +19,7 @@ class NetworkCommunicationManager : NSObject {
     var delegate: NetworkConnectionDelegate?
     
     internal func sendDataToServer(_ messageReqType: MESSAGE_REQUEST_TYPE, PAFunctionName : String, header: IDataStructure) {
-        Utility.runInBackground({ () -> Void in
+        DispatchQueue.global(qos: .background).async {
             var syncResponse: ISyncResponse?
             var error: NSError?
             
@@ -57,7 +57,7 @@ class NetworkCommunicationManager : NSObject {
                     // As a first check, always look for Info Messages from server.
                     // Info Messages contain a brief description of the error information from server
                     let infoMessages: [AnyObject]? = syncBEResponse.infoMessages as [AnyObject];
-                    var dataBEsDictionary: Dictionary<NSObject, AnyObject> = [:]
+                    var dataBEsDictionary: Dictionary<String, AnyObject> = [:]
                     var infoMessage = ""
                     
                     if let theInfoMessage = infoMessages {
@@ -79,8 +79,8 @@ class NetworkCommunicationManager : NSObject {
                     
                     // Extract and return the Bes Dictionary
                     if syncBEResponse.dataBEs != nil {
-                        dataBEsDictionary = syncBEResponse.dataBEs as Dictionary<NSObject, AnyObject>;
-                        self.makeSuccessCallback(PAFunctionName,infoMessage: infoMessage ,responseHaeders: dataBEsDictionary)
+                        dataBEsDictionary = syncBEResponse.dataBEs as! Dictionary<String, AnyObject>;
+                        self.makeSuccessCallback(PAFunctionName, infoMessage: infoMessage, responseHaeders: dataBEsDictionary)
                     }
                     
                 case RESPONSE_STATUS.CANCEL:
@@ -100,26 +100,23 @@ class NetworkCommunicationManager : NSObject {
             else {
                 print("Sync Raw Response instead of SyncBEResponse")
             }
-            
-        })
-        
+        }
     }
     
-    func makeSuccessCallback(_ paFunctionName: String, infoMessage: String, responseHaeders : Dictionary<NSObject, AnyObject>) {
-        Utility.runInMainThread { () -> Void in
+    func makeSuccessCallback(_ paFunctionName: String, infoMessage: String, responseHaeders : Dictionary<String, AnyObject>) {
+        DispatchQueue.main.async {
             self.delegate?.didGetResponseForPA(paFunctionName, infoMessage: infoMessage,responseHaeders: responseHaeders)
         }
     }
     
     func makeErrorCallback(_ paFunctionName: String, error: NSError) {
-        Utility.runInMainThread { () -> Void in
+        DispatchQueue.main.async {
             self.delegate?.didEncounterErrorForPA(paFunctionName, errorMessage: error)
         }
     }
     func makeSystemCredentialNotFoundCallback(_ paFunctionName: String) {
-        Utility.runInMainThread { () -> Void in
+        DispatchQueue.main.async {
             self.delegate?.didNotFindSystemCredentials(paFunctionName)
         }
     }
-    
 }

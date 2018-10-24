@@ -59,17 +59,17 @@ class AddPersonViewController: UIViewController {
         activeTextFied?.resignFirstResponder()
         
         
-        if let fname = personHeader.FIRST_NAME,(fname.characters.count == 0 || fname == "nil" || fname == "") {
+        if let fname = personHeader.FIRST_NAME,(fname.count == 0 || fname == "nil" || fname == "") {
             Utility.displayStringInAlertView("", desc: "Enter First name.")
             return
         }
         
-        if let lname =  personHeader.LAST_NAME,(lname.characters.count == 0 || lname == "nil" || lname == "") {
+        if let lname =  personHeader.LAST_NAME,(lname.count == 0 || lname == "nil" || lname == "") {
             Utility.displayStringInAlertView("", desc: "Last name is mandatory.")
             return
         }
         
-        if let gender =  personHeader.SEX,(gender.characters.count == 0 || gender == "nil" || gender == "") {
+        if let gender =  personHeader.SEX,(gender.count == 0 || gender == "nil" || gender == "") {
             Utility.displayStringInAlertView("", desc: "Please specify gender.")
             return
         }
@@ -106,7 +106,7 @@ class AddPersonViewController: UIViewController {
                 // store your data
                 
                 if let string = field.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
-                    if string.characters.count > 0 &&  string != " " && string != "" {
+                    if string.count > 0 &&  string != " " && string != "" {
                         let email: E_MAIL = E_MAIL()
                         email.E_ADDR = string
                         self.emailIds.append(email)
@@ -135,7 +135,7 @@ class AddPersonViewController: UIViewController {
     func showBusyIndicator() {
         alertController = UIAlertController(title: nil, message: "Please wait\n\n", preferredStyle: .alert)
         
-        let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let spinnerIndicator = UIActivityIndicatorView(style: .whiteLarge)
         
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.black
@@ -167,14 +167,14 @@ extension AddPersonViewController: UITableViewDataSource , UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = UITableViewCell(style:UITableViewCellStyle.default, reuseIdentifier:"cell")
+        let cell:UITableViewCell = UITableViewCell(style:UITableViewCell.CellStyle.default, reuseIdentifier:"cell")
         let email = emailIds[indexPath.row]
         
         if let emailId = email.E_ADDR {
             cell.textLabel?.text = emailId
         }
         
-        cell.accessoryType = UITableViewCellAccessoryType.none
+        cell.accessoryType = UITableViewCell.AccessoryType.none
         return cell
     }
     
@@ -206,7 +206,7 @@ extension AddPersonViewController : UITextFieldDelegate {
         txtAfterUpdate = (txtAfterUpdate as NSString).replacingCharacters(in: range, with: string)
         txtAfterUpdate = txtAfterUpdate.trimmingCharacters(in: CharacterSet.whitespaces)
         
-        if(txtAfterUpdate.characters.count > 0 && txtAfterUpdate != " " || txtAfterUpdate != "") {
+        if(txtAfterUpdate.count > 0 && txtAfterUpdate != " " || txtAfterUpdate != "") {
             if textField == firstNameTextField {
                 personHeader.FIRST_NAME = txtAfterUpdate
             }
@@ -244,7 +244,7 @@ extension AddPersonViewController : UITextFieldDelegate {
 // MARK:- NetworkConnectionDelegate methods
 extension AddPersonViewController: NetworkConnectionDelegate {
     
-    func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<NSObject, AnyObject>) {
+    func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<String, AnyObject>) {
         hideBusyIndicator()
         Utility.displayStringInAlertView("", desc: infoMessage)
         getPersonNumber(infoMessage: infoMessage)
@@ -291,11 +291,11 @@ extension AddPersonViewController {
     
     func registerForKeyboardNotifications() {
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(AddPersonViewController.keyboardWillBeShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(AddPersonViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(AddPersonViewController.keyboardWillBeShown(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(AddPersonViewController.keyboardWillBeHidden(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func keyboardWillBeShown(_ notification: Notification) {
+    @objc func keyboardWillBeShown(_ notification: Notification) {
         if (self.view.window == nil) {
             return
         }
@@ -307,11 +307,11 @@ extension AddPersonViewController {
         var userInfo: NSDictionary!
         userInfo = (notification as NSNotification).userInfo as NSDictionary!
         
-        let keyboardF:NSValue = (userInfo.object(forKey: UIKeyboardFrameEndUserInfoKey) as? NSValue)!
+        let keyboardF:NSValue = (userInfo.object(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)!
         let keyboardFrame = keyboardF.cgRectValue
         let kbHeight = keyboardFrame.height
         
-        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbHeight, 0.0)
+        let contentInsets = UIEdgeInsets.init(top: 0.0, left: 0.0, bottom: kbHeight, right: 0.0)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
         
@@ -325,7 +325,7 @@ extension AddPersonViewController {
         
     }
     
-    func keyboardWillBeHidden(_ notification: Notification) {
+    @objc func keyboardWillBeHidden(_ notification: Notification) {
         if (self.view.window == nil) {
             return
         }

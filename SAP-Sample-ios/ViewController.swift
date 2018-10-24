@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     }
     
     func showFrameworkSettingsViewController() {
-        let settingsViewController: FrameworkSettingsViewController = FrameworkSettingsViewController(style: UITableViewStyle.grouped)
+        let settingsViewController: FrameworkSettingsViewController = FrameworkSettingsViewController(style: UITableView.Style.grouped)
         settingsViewController.delegate = self
         let navController: UINavigationController = UINavigationController(rootViewController: settingsViewController)
         navController.modalPresentationStyle = UIModalPresentationStyle.formSheet
@@ -81,7 +81,7 @@ class ViewController: UIViewController {
          * Sort Persons in Alphabetical order.
          */
         
-        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".characters.map({ String($0) })
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map({ String($0) })
         var sectionArray : [String] = []
         var dataSorce: [String: [PERSON_HEADER]] = [:]
         var sortedPersonHeaders: [PERSON_HEADER] = []
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
             
             var afirstCharacter: String
             if let firstName = a.FIRST_NAME {
-                afirstCharacter = String(firstName.characters.prefix(1)).uppercased()
+                afirstCharacter = String(firstName.prefix(1)).uppercased()
             }
             else {
                 afirstCharacter = "#"
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
             
             var bfirstCharacter: String
             if let firstName = b.FIRST_NAME {
-                bfirstCharacter = String(firstName.characters.prefix(1)).uppercased()
+                bfirstCharacter = String(firstName.prefix(1)).uppercased()
             }
             else {
                 bfirstCharacter = "#"
@@ -122,7 +122,7 @@ class ViewController: UIViewController {
             
             var firstCharacter: String
             if let firstName = person.FIRST_NAME {
-                firstCharacter = String(firstName.characters.prefix(1)).uppercased()
+                firstCharacter = String(firstName.prefix(1)).uppercased()
             }
             else {
                 firstCharacter = "#"
@@ -158,16 +158,16 @@ class ViewController: UIViewController {
     
     @IBAction func menuButtonAction(_ sender: AnyObject) {
         let alertController: UIAlertController = UIAlertController(title: nil, message: nil,
-                                                                   preferredStyle: UIAlertControllerStyle.actionSheet)
+                                                                   preferredStyle: UIAlertController.Style.actionSheet)
         
-        let getPersonAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Get Person", comment: ""), style: UIAlertActionStyle.default) { (action: UIAlertAction) -> Void in self.showGetPersonScreen()
+        let getPersonAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Get Person", comment: ""), style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in self.showGetPersonScreen()
         }
         
-        let settingsAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: UIAlertActionStyle.default) { (action: UIAlertAction) -> Void in self.showFrameworkSettingsViewController()
+        let settingsAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in self.showFrameworkSettingsViewController()
         }
         
         
-        let cancelAction: UIAlertAction = UIAlertAction(title:  NSLocalizedString("Cancel",  comment: ""), style: UIAlertActionStyle.cancel, handler: nil)
+        let cancelAction: UIAlertAction = UIAlertAction(title:  NSLocalizedString("Cancel",  comment: ""), style: UIAlertAction.Style.cancel, handler: nil)
         
         alertController.addAction(getPersonAction)
         alertController.addAction(settingsAction)
@@ -264,7 +264,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = UITableViewCell(style:UITableViewCellStyle.subtitle, reuseIdentifier:"cell")
+        let cell:UITableViewCell = UITableViewCell(style:UITableViewCell.CellStyle.subtitle, reuseIdentifier:"cell")
         var personHeader : PERSON_HEADER = PERSON_HEADER()
         
         if isFiltered {
@@ -296,7 +296,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.textColor = UIColor.darkText
         cell.detailTextLabel?.textColor = UIColor.gray
         
-        cell.accessoryType = UITableViewCellAccessoryType.none
+        cell.accessoryType = UITableViewCell.AccessoryType.none
         return cell
     }
     
@@ -339,7 +339,7 @@ extension ViewController : UISearchBarDelegate, UISearchDisplayDelegate  {
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         
-        if searchBar.text != nil && searchBar.text!.characters.count > 0 {
+        if searchBar.text != nil && searchBar.text!.count > 0 {
             searchBar.showsCancelButton = false
         }
         else {
@@ -351,7 +351,7 @@ extension ViewController : UISearchBarDelegate, UISearchDisplayDelegate  {
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if((searchBar.text?.characters.count)! > 0) {
+        if((searchBar.text?.count)! > 0) {
             isFiltered = true
         }
         else {
@@ -361,14 +361,14 @@ extension ViewController : UISearchBarDelegate, UISearchDisplayDelegate  {
         searchResultsDataSource.removeAll()
         var searchText = ""
         
-        if (self.searchBar.text?.characters.count)! > 0 {
+        if (self.searchBar.text?.count)! > 0 {
             searchText = self.searchBar.text!.lowercased()
         }
         else {
-            Utility.runInMainThread({
+            DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.view.endEditing(true)
-            })
+            }
             return
         }
         

@@ -15,14 +15,6 @@ struct Utility {
         tableView.tableFooterView =  UIView(frame: CGRect.zero)
     }
     
-    static func runInMainThread(_ block:@escaping ()->Void) {
-        DispatchQueue.main.async(execute: block)
-    }
-    
-    static func runInBackground(_ block:@escaping ()->Void) {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: block)
-    }
-    
     static func getCompleteInfoMessageStringFromInfoMessages(_ infoMessages: [AnyObject]) -> (String,Bool) {
         // Loop through Each of Info Messages and form one complete String.
         var completeInfoMessageString : String = ""
@@ -52,9 +44,9 @@ struct Utility {
     }
     
     static func displayAlertWithOKButton(_ title: String, message: String, viewController: UIViewController) {
-        runInMainThread { () -> Void in
-            let alertController: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            let alertAction: UIAlertAction = UIAlertAction(title:  NSLocalizedString("OK",  comment: ""), style: UIAlertActionStyle.default, handler: nil)
+        DispatchQueue.main.async {
+            let alertController: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+            let alertAction: UIAlertAction = UIAlertAction(title:  NSLocalizedString("OK",  comment: ""), style: UIAlertAction.Style.default, handler: nil)
             alertController.addAction(alertAction)
             viewController.present(alertController, animated: true, completion: nil)
         }
@@ -68,8 +60,7 @@ struct Utility {
     }
     
     static func displayStringInAlertView(_ title: String, desc: String) {
-        runInMainThread { () -> Void in
-            
+        DispatchQueue.main.async {
             let errorAlertView: UIAlertView = UIAlertView(title:  title,
                                                           message: desc,
                                                           delegate: nil,
@@ -77,7 +68,6 @@ struct Utility {
             errorAlertView.show()
         }
     }
-    
      
     static func insertPersonHeaderToDB(person: PERSON_HEADER) {
         let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!

@@ -116,14 +116,14 @@ extension PersonDetailViewController: UITableViewDataSource , UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = UITableViewCell(style:UITableViewCellStyle.default, reuseIdentifier:"cell")
+        let cell:UITableViewCell = UITableViewCell(style:UITableViewCell.CellStyle.default, reuseIdentifier:"cell")
         let email = emailIds[indexPath.row]
         
         if let emailId = email.E_ADDR {
             cell.textLabel?.text = emailId
         }
         
-        cell.accessoryType = UITableViewCellAccessoryType.none
+        cell.accessoryType = UITableViewCell.AccessoryType.none
         return cell
     }
     

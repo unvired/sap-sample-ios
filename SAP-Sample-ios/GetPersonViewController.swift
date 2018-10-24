@@ -61,32 +61,32 @@ class GetPersonViewController: UIViewController {
     func setupNavigationBarBackButton() {
         // Set the Back Button
         let backButton: UIButton = UIButton()
-        backButton.setImage(UIImage(named: "backButton"), for: UIControlState())
+        backButton.setImage(UIImage(named: "backButton"), for: UIControl.State())
         backButton.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
-        backButton.setImage(backButton.imageView?.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: UIControlState())
-        backButton.addTarget(self, action: #selector(GetPersonViewController.backButtonAction(_:)), for: UIControlEvents.touchUpInside)
+        backButton.setImage(backButton.imageView?.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: UIControl.State())
+        backButton.addTarget(self, action: #selector(GetPersonViewController.backButtonAction(_:)), for: UIControl.Event.touchUpInside)
         let backBarButton: UIBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButton
     }
     
-    func didTapOnView() {
+    @objc func didTapOnView() {
         /** Dismiss the Keyboard **/
         self.view.endEditing(true)
     }
     
     // MARK:- Button Action
-    func backButtonAction(_ sender:UIBarButtonItem) {
+    @objc func backButtonAction(_ sender:UIBarButtonItem) {
         
         if didDownloadPersonHeader {
             let alertController = UIAlertController(title: nil, message:
-                NSLocalizedString("Do you want to save results?", comment: "") , preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) { (action) -> Void in
+                NSLocalizedString("Do you want to save results?", comment: "") , preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { (action) -> Void in
                 Utility.insertOrReplaceHeadersInDatabase([self.downloadedPersonHeader])
                 Utility.insertOrReplaceHeadersInDatabase(self.emails)
                 self.delegate?.didGetPerson()
                 self.navigationController?.popViewController(animated: true)
             })
-            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel){ (action) -> Void in
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.cancel){ (action) -> Void in
                 self.navigationController?.popViewController(animated: true)
             })
             
@@ -102,7 +102,7 @@ class GetPersonViewController: UIViewController {
         
         let number = String(describing: personHeader.PERSNUMBER)
         
-        if (number.characters.count == 0 || number == "nil") {
+        if (number.count == 0 || number == "nil") {
             Utility.displayAlertWithOKButton("", message: "Please provide Person Number", viewController: self)
             return
         }
@@ -114,7 +114,7 @@ class GetPersonViewController: UIViewController {
     func showBusyIndicator() {
         alertController = UIAlertController(title: nil, message: "Please wait\n\n", preferredStyle: .alert)
         
-        let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let spinnerIndicator = UIActivityIndicatorView(style: .whiteLarge)
         
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.black
@@ -160,7 +160,7 @@ extension GetPersonViewController : UITextFieldDelegate {
 // MARK:- NetworkConnectionDelegate methods
 extension GetPersonViewController: NetworkConnectionDelegate {
     
-    func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<NSObject, AnyObject>) {
+    func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<String, AnyObject>) {
         hideBusyIndicator()
         Utility.displayStringInAlertView("", desc: "Person Downloaded.")
         self.didDownloadPersonHeader = true
@@ -201,23 +201,17 @@ extension GetPersonViewController: NetworkConnectionDelegate {
         }
     }
     
-    func getPersonHeader(_ dataBEs: Dictionary<NSObject, AnyObject>) -> ([PERSON_HEADER],[E_MAIL]) {
-        var personHeader: [PERSON_HEADER] = []
+    func getPersonHeader(_ dataBEs: Dictionary<String, AnyObject>) -> ([PERSON_HEADER],[E_MAIL]) {
+        var personHeaders: [PERSON_HEADER] = []
         var emails : [E_MAIL] = []
-        var headers:Dictionary<NSObject, AnyObject>?
         
-        for (key, values) in dataBEs {
-            if key as! String == "PERSON" {
-                headers = values as? Dictionary<NSObject, AnyObject>
+        for (_, beDictionary) in dataBEs {
+            for (personHeader, personEmails) in beDictionary as! Dictionary<DataStructure, [E_MAIL]> {
+                // Header
+                personHeaders.append(personHeader as! PERSON_HEADER)
+                emails.append(contentsOf: personEmails)
             }
         }
-        
-        if let headers = headers {
-            for (header, value) in headers {
-                emails = value as! [E_MAIL]
-                personHeader.append(header as! PERSON_HEADER)
-            }
-        }
-        return (personHeader, emails)
+        return (personHeaders, emails)
     }
 }
