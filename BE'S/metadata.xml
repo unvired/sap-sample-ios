@@ -1,6 +1,6 @@
-<Application description="Unvired SAP Sample" name="UnviredSAPSample" namespace="UNVIRED" package="com.unvired.sample.sap" version="1.0">
+<Application description="Unvired SAP Sample" name="UNVIRED_SAP_SAMPLE" namespace="UNVIRED" package="com.unvired.sapsample" version="1.0">
     <BusinessEntity attachments="false" description="ME Relica: Person (Sample Application)" name="PERSON" onConflict="SERVER_WINS" save="true">
-        <header className="com.unvired.sample.sap.be.PERSON_HEADER" description="" name="PERSON_HEADER">
+        <header className="com.unvired.sapsample.be.PERSON_HEADER" description="" name="PERSON_HEADER">
             <Field description="Client" isGid="true" length="3" mandatory="true" name="MANDT" sqlType="TEXT"/>
             <Field description="Person Number (Sample Application)" isGid="true" length="10" mandatory="true" name="PERSNUMBER" sqlType="INTEGER"/>
             <Field description="First Name (Sample Application)" isGid="false" length="40" mandatory="false" name="FIRST_NAME" sqlType="TEXT"/>
@@ -19,7 +19,7 @@
             <Field description="Last Changed by" isGid="false" length="12" mandatory="false" name="CHGNAM" sqlType="TEXT"/>
             <Field description="Last Changed at" isGid="false" length="8" mandatory="false" name="CHGTIM" sqlType="TEXT"/>
         </header>
-        <item className="com.unvired.sample.sap.be.E_MAIL" description="" name="E_MAIL">
+        <item className="com.unvired.sapsample.be.E_MAIL" description="" name="E_MAIL">
             <Field description="Client" isGid="true" length="3" mandatory="true" name="MANDT" sqlType="TEXT"/>
             <Field description="Person Number (Sample Application)" isGid="true" length="10" mandatory="true" name="PERSNUMBER" sqlType="INTEGER"/>
             <Field description="Seqeunce Number (Sample Application)" isGid="true" length="10" mandatory="true" name="SEQNO_E_MAIL" sqlType="INTEGER"/>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24178FC52452C28A00C857E1 /* metadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = 24178FC42452C28A00C857E1 /* metadata.xml */; };
 		91E93B3421806E540082DBC0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 91E93B3321806E540082DBC0 /* README.md */; };
 		BDDF6C12209E4B0BE6703B4A /* Pods_SAP_Sample_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD459089DB0BBE742AA5E44 /* Pods_SAP_Sample_ios.framework */; };
 		FA0214D11F31FA69006FC509 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0214D01F31FA69006FC509 /* AppDelegate.swift */; };
@@ -22,12 +23,12 @@
 		FA3C74021F31FF0C007361FF /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C74011F31FF0C007361FF /* AddPersonViewController.swift */; };
 		FA3C74041F31FF17007361FF /* GetPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C74031F31FF17007361FF /* GetPersonViewController.swift */; };
 		FA7C3CB21F320E4300B201E9 /* NetworkCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */; };
-		FA7C3CB81F320EE300B201E9 /* metadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA7C3CB71F320EE300B201E9 /* metadata.xml */; };
 		FA7C3CBA1F320F1800B201E9 /* applicationMetadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */; };
 		FAEF04C41F3328450008E71E /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEF04C31F3328450008E71E /* PersonDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24178FC42452C28A00C857E1 /* metadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = metadata.xml; sourceTree = "<group>"; };
 		3CD459089DB0BBE742AA5E44 /* Pods_SAP_Sample_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAP_Sample_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52EC274C6FE16D153DFD8757 /* Pods-SAP-Sample-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAP-Sample-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAP-Sample-ios/Pods-SAP-Sample-ios.release.xcconfig"; sourceTree = "<group>"; };
 		76ABD0298951336580CF5FD6 /* Pods-SAP-Sample-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAP-Sample-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAP-Sample-ios/Pods-SAP-Sample-ios.debug.xcconfig"; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		FA3C74011F31FF0C007361FF /* AddPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 		FA3C74031F31FF17007361FF /* GetPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPersonViewController.swift; sourceTree = "<group>"; };
 		FA7C3CB11F320E4300B201E9 /* NetworkCommunicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCommunicationManager.swift; sourceTree = "<group>"; };
-		FA7C3CB71F320EE300B201E9 /* metadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = metadata.xml; sourceTree = "<group>"; };
 		FA7C3CB91F320F1800B201E9 /* applicationMetadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = applicationMetadata.xml; sourceTree = "<group>"; };
 		FAEF04C31F3328450008E71E /* PersonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,7 +121,7 @@
 		FA3C73F61F31FECB007361FF /* BE'S */ = {
 			isa = PBXGroup;
 			children = (
-				FA7C3CB71F320EE300B201E9 /* metadata.xml */,
+				24178FC42452C28A00C857E1 /* metadata.xml */,
 				FA3C73F71F31FECB007361FF /* AppConstant.swift */,
 				FA3C73F81F31FECB007361FF /* E_MAIL.swift */,
 				FA3C73F91F31FECB007361FF /* PERSON_HEADER.swift */,
@@ -187,6 +187,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -206,9 +207,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				91E93B3421806E540082DBC0 /* README.md in Resources */,
-				FA7C3CB81F320EE300B201E9 /* metadata.xml in Resources */,
 				FA0214DB1F31FA6A006FC509 /* LaunchScreen.storyboard in Resources */,
 				FA0214D81F31FA6A006FC509 /* Assets.xcassets in Resources */,
+				24178FC52452C28A00C857E1 /* metadata.xml in Resources */,
 				FA7C3CBA1F320F1800B201E9 /* applicationMetadata.xml in Resources */,
 				FA0214D61F31FA69006FC509 /* Main.storyboard in Resources */,
 			);
@@ -241,7 +242,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SAP-Sample-ios/Pods-SAP-Sample-ios-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SAP-Sample-ios/Pods-SAP-Sample-ios-resources.sh",
 				"${PODS_ROOT}/UnviredSDK/UnviredSDK.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -250,7 +251,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAP-Sample-ios/Pods-SAP-Sample-ios-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SAP-Sample-ios/Pods-SAP-Sample-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

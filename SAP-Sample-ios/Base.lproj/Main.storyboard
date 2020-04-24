@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sgx-dT-S7Y">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sgx-dT-S7Y">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="DUC-YZ-p5b">
-                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="bHw-bU-xaY"/>
                                 </constraints>
@@ -33,7 +30,7 @@
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l0x-fK-Q9d">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="579"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="1IK-87-4Av"/>
@@ -93,11 +90,10 @@
                                 <rect key="frame" x="0.0" y="61" width="375" height="606"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Person No." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bhE-Jg-III">
-                                        <rect key="frame" x="16" y="16" width="343" height="45"/>
+                                        <rect key="frame" x="16" y="36" width="343" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="Kf9-uf-4Ny"/>
                                         </constraints>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -105,7 +101,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67v-7L-PVd">
-                                        <rect key="frame" x="147" y="77" width="80" height="45"/>
+                                        <rect key="frame" x="147.5" y="97" width="80" height="45"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="3UO-O3-w8H"/>
@@ -120,7 +116,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Buk-mI-44c">
-                                        <rect key="frame" x="16" y="138" width="343" height="64"/>
+                                        <rect key="frame" x="16" y="158" width="343" height="64"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9WN-Bt-uN0">
                                                 <rect key="frame" x="16" y="0.0" width="311" height="30"/>
@@ -155,7 +151,7 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="bhE-Jg-III" firstAttribute="top" secondItem="cTz-uF-xyg" secondAttribute="top" constant="16" id="6ir-vL-Wec"/>
+                                    <constraint firstItem="bhE-Jg-III" firstAttribute="top" secondItem="cTz-uF-xyg" secondAttribute="top" constant="36" id="6ir-vL-Wec"/>
                                     <constraint firstItem="67v-7L-PVd" firstAttribute="top" secondItem="bhE-Jg-III" secondAttribute="bottom" constant="16" id="IEM-e7-gUX"/>
                                     <constraint firstItem="Buk-mI-44c" firstAttribute="leading" secondItem="bhE-Jg-III" secondAttribute="leading" id="J6C-G1-wl0"/>
                                     <constraint firstItem="Buk-mI-44c" firstAttribute="top" secondItem="67v-7L-PVd" secondAttribute="bottom" constant="16" id="OE8-Ah-NhU"/>
@@ -209,7 +205,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="agf-dR-4Yj"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -221,7 +216,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="k2r-7K-c0A"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -233,7 +227,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="Hvo-a3-JZ7"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -245,7 +238,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="UEH-BZ-TcK"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -257,7 +249,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="aoE-Ps-LeO"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                                 <connections>
@@ -269,7 +260,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="9Mq-hf-SZz"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                                 <connections>
@@ -292,7 +282,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="cXI-0b-RWs"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                                 <connections>
