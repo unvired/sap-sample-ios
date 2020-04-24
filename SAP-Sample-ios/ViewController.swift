@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         let settingsViewController: FrameworkSettingsViewController = FrameworkSettingsViewController(style: UITableView.Style.grouped)
         settingsViewController.delegate = self
         let navController: UINavigationController = UINavigationController(rootViewController: settingsViewController)
-        navController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+        navController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         navController.navigationBar.barTintColor = UIColor.blue
         navController.navigationBar.barStyle = UIBarStyle.black
         navController.navigationBar.tintColor = UIColor.white

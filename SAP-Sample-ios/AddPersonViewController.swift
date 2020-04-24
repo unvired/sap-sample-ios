@@ -60,23 +60,23 @@ class AddPersonViewController: UIViewController {
         
         
         if let fname = personHeader.FIRST_NAME,(fname.count == 0 || fname == "nil" || fname == "") {
-            Utility.displayStringInAlertView("", desc: "Enter First name.")
+            Utility.displayStringInAlertView("", desc: "Enter First name.", viewController: self)
             return
         }
         
         if let lname =  personHeader.LAST_NAME,(lname.count == 0 || lname == "nil" || lname == "") {
-            Utility.displayStringInAlertView("", desc: "Last name is mandatory.")
+            Utility.displayStringInAlertView("", desc: "Last name is mandatory.", viewController: self)
             return
         }
         
         if let gender =  personHeader.SEX,(gender.count == 0 || gender == "nil" || gender == "") {
-            Utility.displayStringInAlertView("", desc: "Please specify gender.")
+            Utility.displayStringInAlertView("", desc: "Please specify gender.", viewController: self)
             return
         }
         
         personHeader.PERSNUMBER = 0
         personHeader.MANDT = String(800)
-        Utility.insertOrReplaceHeadersInDatabase([personHeader])
+        Utility.insertOrReplaceHeadersInDatabase([personHeader], vc: self)
         
         if self.emailIds.count > 0 {
             let lid = personHeader.getLid()
@@ -87,7 +87,7 @@ class AddPersonViewController: UIViewController {
                 mail.PERSNUMBER = personHeader.PERSNUMBER
                 mail.setFid(lid)
             }
-            Utility.insertOrReplaceHeadersInDatabase(self.emailIds)
+            Utility.insertOrReplaceHeadersInDatabase(self.emailIds, vc: self)
         }
         
         self.networkManager.sendDataToServer(MESSAGE_REQUEST_TYPE(), PAFunctionName: AppConstants.PA_CREATE_PERSON, header: personHeader)
@@ -246,7 +246,7 @@ extension AddPersonViewController: NetworkConnectionDelegate {
     
     func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<String, AnyObject>) {
         hideBusyIndicator()
-        Utility.displayStringInAlertView("", desc: infoMessage)
+        Utility.displayStringInAlertView("", desc: infoMessage, viewController: self)
         getPersonNumber(infoMessage: infoMessage)
         delegate?.didGetPerson()
         self.navigationController?.popViewController(animated: true)
@@ -279,8 +279,8 @@ extension AddPersonViewController: NetworkConnectionDelegate {
             }
             
             // Save
-            Utility.insertOrReplaceHeadersInDatabase([personHeader])
-            Utility.insertOrReplaceHeadersInDatabase(emailIds)
+            Utility.insertOrReplaceHeadersInDatabase([personHeader], vc: self)
+            Utility.insertOrReplaceHeadersInDatabase(emailIds, vc: self)
         }
     }
 }
@@ -305,7 +305,7 @@ extension AddPersonViewController {
         }
         
         var userInfo: NSDictionary!
-        userInfo = (notification as NSNotification).userInfo as NSDictionary!
+        userInfo = (notification as NSNotification).userInfo as NSDictionary?
         
         let keyboardF:NSValue = (userInfo.object(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue)!
         let keyboardFrame = keyboardF.cgRectValue

@@ -81,8 +81,8 @@ class GetPersonViewController: UIViewController {
             let alertController = UIAlertController(title: nil, message:
                 NSLocalizedString("Do you want to save results?", comment: "") , preferredStyle: UIAlertController.Style.alert)
             alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { (action) -> Void in
-                Utility.insertOrReplaceHeadersInDatabase([self.downloadedPersonHeader])
-                Utility.insertOrReplaceHeadersInDatabase(self.emails)
+                Utility.insertOrReplaceHeadersInDatabase([self.downloadedPersonHeader], vc: self)
+                Utility.insertOrReplaceHeadersInDatabase(self.emails, vc: self)
                 self.delegate?.didGetPerson()
                 self.navigationController?.popViewController(animated: true)
             })
@@ -162,7 +162,7 @@ extension GetPersonViewController: NetworkConnectionDelegate {
     
     func didGetResponseForPA(_ paFunctionName: String, infoMessage: String, responseHaeders: Dictionary<String, AnyObject>) {
         hideBusyIndicator()
-        Utility.displayStringInAlertView("", desc: "Person Downloaded.")
+        Utility.displayStringInAlertView("", desc: "Person Downloaded.", viewController: self)
         self.didDownloadPersonHeader = true
         let resultData = self.getPersonHeader(responseHaeders)
         self.downloadedPersonHeader = resultData.0[0]

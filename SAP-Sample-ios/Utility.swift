@@ -52,20 +52,19 @@ struct Utility {
         }
     }
     
-    static func displayErrorInformation(_ error: NSError?) {
+    static func displayErrorInformation(_ error: NSError?, view: UIViewController) {
         if error != nil {
             let desc: String = error!.localizedDescription
-            displayStringInAlertView(NSLocalizedString("Error",  comment: ""), desc: desc)
+            displayStringInAlertView(NSLocalizedString("Error",  comment: ""), desc: desc, viewController: view)
         }
     }
     
-    static func displayStringInAlertView(_ title: String, desc: String) {
+    static func displayStringInAlertView(_ title: String, desc: String, viewController: UIViewController) {
         DispatchQueue.main.async {
-            let errorAlertView: UIAlertView = UIAlertView(title:  title,
-                                                          message: desc,
-                                                          delegate: nil,
-                                                          cancelButtonTitle:NSLocalizedString("OK",  comment: ""))
-            errorAlertView.show()
+            let alertController: UIAlertController = UIAlertController(title: title, message: desc, preferredStyle: UIAlertController.Style.alert)
+            let alertAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertAction.Style.cancel, handler: nil)
+            alertController.addAction(alertAction)
+            viewController.present(alertController, animated: true, completion: nil)
         }
     }
      
@@ -137,7 +136,7 @@ struct Utility {
         return false
     }
     
-    static func insertOrReplaceHeadersInDatabase(_ dataStructures: [IDataStructure]) -> Bool {
+    static func insertOrReplaceHeadersInDatabase(_ dataStructures: [IDataStructure], vc: UIViewController) {
         let dataManager: IDataManager = UnviredSAPSampleUtils.getApplicationDataManager()!
         
         for dataStructure:IDataStructure in dataStructures {
@@ -145,10 +144,9 @@ struct Utility {
                 try dataManager.replace(dataStructure)
             }
             catch let error as NSError {
-                Utility.displayErrorInformation(error)
+                Utility.displayErrorInformation(error, view: vc)
             }
         }
-        return true
     }
     
     static func logErrorMessage(_ error: NSError?) {
